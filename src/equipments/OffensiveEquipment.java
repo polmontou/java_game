@@ -1,19 +1,21 @@
-public class DefensiveEquipment {
+package equipments;
+
+public class OffensiveEquipment {
     private String type;
-    private int defenseLvl;
+    private int attackLvl;
     private String name;
     //Constructor
-    public DefensiveEquipment(String type, int defenseLvl, String name) {
+    public OffensiveEquipment(String type, int attackLvl, String name) {
         this.type = type;
-        this.defenseLvl = defenseLvl;
+        this.attackLvl = attackLvl;
         this.name = name;
     }
     // Setters
     public void setType(String type) {
         this.type = type;
     }
-    public void setAttackLvl(int defenseLvl) {
-        this.defenseLvl = defenseLvl;
+    public void setAttackLvl(int attackLvl) {
+        this.attackLvl = attackLvl;
     }
     public void setName(String name) {
         this.name = name;
@@ -24,13 +26,13 @@ public class DefensiveEquipment {
         return type;
     }
     public int getAttackLvl() {
-        return defenseLvl;
+        return attackLvl;
     }
     public String getName() {
         return name;
     }
-    //toString
+    // toString
     public String toString() {
-        return name + " " + type + " " + defenseLvl;
+        return name + " " + type + " " + attackLvl;
     }
 }

@@ -1,4 +1,6 @@
-import javax.lang.model.type.NullType;
+package character;
+
+import equipments.OffensiveEquipment;
 
 public class Character {
     private String type;
@@ -50,6 +52,6 @@ public class Character {
 
     // toString
     public String toString(){
-        return name + " is a " + type + " with " + health + "HP and " + basicAttack + " attack points.";
+        return name + " is a " + type.toLowerCase() + " with " + health + "HP and " + basicAttack + " attack points.";
     }
 }
