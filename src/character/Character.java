@@ -8,6 +8,7 @@ public class Character {
     private int health;
     private int basicAttack;
     private OffensiveEquipment weapon;
+    private int boardPosition;
 
     // Constructor
     public Character(String type, String name) {
@@ -15,6 +16,7 @@ public class Character {
         this.name = name;
         this.health = 10;
         this.basicAttack = 5;
+        this.boardPosition = 0;
     }
     // Setters
     public void setType(String type) {
@@ -31,6 +33,9 @@ public class Character {
     }
     public void setWeapon(OffensiveEquipment weapon) {
         this.weapon = weapon;
+    }
+    public void setBoardPosition(int boardPosition) {
+        this.boardPosition = boardPosition;
     }
 
     // Getters
@@ -49,9 +54,16 @@ public class Character {
     public OffensiveEquipment getWeapon() {
         return weapon;
     }
+    public int getBoardPosition() {
+        return boardPosition;
+    }
 
     // toString
     public String toString(){
-        return name + " is a " + type.toLowerCase() + " with " + health + "HP and " + basicAttack + " attack points.";
+        return name + " est un " + type.toLowerCase() + " avec " + health + "HP et " + basicAttack + " points d'attaque.";
+    }
+
+    public void moveCharacter(int throwResult){
+        setBoardPosition(this.boardPosition + throwResult);
     }
 }

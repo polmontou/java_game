@@ -12,8 +12,8 @@ public class Menu {
     private List<Character> charactersAvailable;
 
     public Menu () {
-        this.classesAvailable = new String[] {"Warrior", "Wizard"};
-        this.charactersAvailable = new ArrayList<Character>();
+        classesAvailable = new String[] {"Warrior", "Wizard"};
+        charactersAvailable = new ArrayList<Character>();
     }
 
     public static void displayMessage(String message) {
@@ -38,7 +38,7 @@ public class Menu {
         return choice;
     }
 
-    public int getUserPosInt(int valueMax) {
+    public static int getUserPosInt(int valueMax) {
         Scanner input = new Scanner(System.in);
         boolean valid = false;
         int choice = -1;
@@ -70,8 +70,9 @@ public class Menu {
                 "\nQue veux-tu faire?" +
                 "\n1 - Créer ma saucisse" +
                 "\n2 - Voir mes saucisses" +
-                "\n3 - Quitter le jeu");
-        return 3;
+                "\n3 - Démarrer la grillade" +
+                "\n4 - Quitter le jeu");
+        return 4;
     }
 
     private void parseUserMenuChoice(int choicesAvailable) {
@@ -91,23 +92,23 @@ public class Menu {
                     displayMessage(i+1 + " - " + classesAvailable[i]);
                 }
                 int choice = getUserPosInt(this.classesAvailable.length);
-                type = this.classesAvailable[choice-1];
+                type = classesAvailable[choice-1];
 
                 Character player1 = new Character(type, name);
-                this.charactersAvailable.add(player1);
+                charactersAvailable.add(player1);
                 displayMessage(player1.toString());
 
                 break;
             case 2 :
-                if (!this.charactersAvailable.isEmpty()) {
+                if (!charactersAvailable.isEmpty()) {
                     displayMessage("Vos personnages :");
-                    for (int i = 0; i < this.charactersAvailable.size(); i++) {
-                        displayMessage((i + 1) + " - " + this.charactersAvailable.get(i).getName());
+                    for (int i = 0; i < charactersAvailable.size(); i++) {
+                        displayMessage((i + 1) + " - " + charactersAvailable.get(i).getName());
                     }
                     displayMessage("Lequel veux-tu voir?");
 
-                    int playerChoice = getUserPosInt(this.charactersAvailable.size());
-                    Character chosenCharacter = this.charactersAvailable.get(playerChoice - 1);
+                    int playerChoice = getUserPosInt(charactersAvailable.size());
+                    Character chosenCharacter = charactersAvailable.get(playerChoice - 1);
 
                     displayMessage(chosenCharacter.toString());
                     displayCharacterMenu(chosenCharacter);
@@ -116,6 +117,14 @@ public class Menu {
                 }
                 break;
             case 3 :
+                if (!charactersAvailable.isEmpty()) {
+                    if(charactersAvailable.size() == 1) {
+                        Game game = new Game(charactersAvailable.get(0));
+                    }
+
+                }
+                break;
+            case 4 :
                 displayMessage("A plus à barbeuc' land!");
                 System.exit(0);
         }
@@ -124,18 +133,22 @@ public class Menu {
     private void displayCharacterMenu(Character character) {
         displayMessage("Que veux-tu faire sur "+ character.getName()+"?"+
                 "\n1 - Le renommer"+
-                "\n2 - Le supprimer");
-        parseChoiceCharacterMenu(character);
+                "\n2 - Le supprimer"+
+                "\n3 - I'm going, going back, back to Cali, Cali (retour au menu d'avant)");
+        int choice = getUserPosInt(3);
+        parseChoiceCharacterMenu(character, choice);
     }
 
-    private void parseChoiceCharacterMenu(Character character) {
-        int choice = getUserPosInt(2);
+    private void parseChoiceCharacterMenu(Character character, int choice) {
         switch (choice) {
             case 1 :
                 character.setName(getUserString());
                 break;
             case 2 :
-                this.charactersAvailable.remove(character);
+                charactersAvailable.remove(character);
+                break;
+            case 3 :
+                break;
         }
     }
 
