@@ -16,10 +16,19 @@ public class Menu {
         charactersAvailable = new ArrayList<Character>();
     }
 
+    /**
+     * Displays a message in an easier way than System.out.println
+     * @param message
+     */
     public static void displayMessage(String message) {
         System.out.println(message);
     }
-    public String getUserString() {
+
+    /**
+     * Uses Scanner to get user's answer and checks if it's a string
+     * @return user's string answer
+     */
+    public static String getUserString() {
         Scanner input = new Scanner(System.in);
         boolean valid = false;
         String choice = "";
@@ -38,6 +47,10 @@ public class Menu {
         return choice;
     }
 
+    /**
+     * Uses Scanner to get user's answer and checks if it's an int
+     * @return user's int answer
+     */
     public static int getUserPosInt(int valueMax) {
         Scanner input = new Scanner(System.in);
         boolean valid = false;
@@ -60,11 +73,20 @@ public class Menu {
 
         return choice;
     }
+
+    /**
+     * Displays the game's title
+     */
     public void displayTitle() {
         displayMessage(
                 "************** Welcome in : **************" +
                 "\nSAUSAGES AREN'T BURNT ENOUGH FOR HELL !!");
     }
+
+    /**
+     * Displays the game's beginning menu
+     * @return an int which represents how many options are available
+     */
     private int displayMenu() {
         displayMessage(
                 "\nQue veux-tu faire?" +
@@ -75,6 +97,10 @@ public class Menu {
         return 4;
     }
 
+    /**
+     * Parses user's choice in the beginning menu
+     * @param choicesAvailable is how many options are available in the menu
+     */
     private void parseUserMenuChoice(int choicesAvailable) {
         int userChoice = getUserPosInt(choicesAvailable);
         String name = "";
@@ -82,54 +108,33 @@ public class Menu {
 
         switch (userChoice) {
             case 1 :
-                displayMessage("Let's go créer ta future saucisse");
-                // Name input
-                displayMessage("Quel sera le nom de ta merguez?");
-                name = getUserString();
-                // Type of character input
-                displayMessage("Quelle classe veux-tu jouer?");
-                for (int i = 0; i < this.classesAvailable.length; i++) {
-                    displayMessage(i+1 + " - " + classesAvailable[i]);
-                }
-                int choice = getUserPosInt(this.classesAvailable.length);
-                type = classesAvailable[choice-1];
-
-                Character player1 = new Character(type, name);
+                Character player1 = new Character();
                 charactersAvailable.add(player1);
                 displayMessage(player1.toString());
-
                 break;
+
             case 2 :
-                if (!charactersAvailable.isEmpty()) {
-                    displayMessage("Vos personnages :");
-                    for (int i = 0; i < charactersAvailable.size(); i++) {
-                        displayMessage((i + 1) + " - " + charactersAvailable.get(i).getName());
-                    }
-                    displayMessage("Lequel veux-tu voir?");
-
-                    int playerChoice = getUserPosInt(charactersAvailable.size());
-                    Character chosenCharacter = charactersAvailable.get(playerChoice - 1);
-
-                    displayMessage(chosenCharacter.toString());
-                    displayCharacterMenu(chosenCharacter);
-                } else {
-                    displayMessage("Aucun de créé pour le moment!");
-                }
+                displayCharacters();
                 break;
+
             case 3 :
                 if (!charactersAvailable.isEmpty()) {
                     if(charactersAvailable.size() == 1) {
                         Game game = new Game(charactersAvailable.get(0));
                     }
-
                 }
                 break;
+
             case 4 :
                 displayMessage("A plus à barbeuc' land!");
                 System.exit(0);
         }
     }
 
+    /**
+     * Displays the menu when user is checking a specific character in the menu
+     * @param character is the character checked by user
+     */
     private void displayCharacterMenu(Character character) {
         displayMessage("Que veux-tu faire sur "+ character.getName()+"?"+
                 "\n1 - Le renommer"+
@@ -139,6 +144,11 @@ public class Menu {
         parseChoiceCharacterMenu(character, choice);
     }
 
+    /**
+     * Parses user's choice in the character menu
+     * @param character is the character checked by user
+     * @param choice is the choice done by user in character menu
+     */
     private void parseChoiceCharacterMenu(Character character, int choice) {
         switch (choice) {
             case 1 :
@@ -152,6 +162,26 @@ public class Menu {
         }
     }
 
+    /**
+     * Displays all the characters created
+     */
+    public void displayCharacters() {
+        if (!charactersAvailable.isEmpty()) {
+            displayMessage("Vos personnages :");
+            for (int i = 0; i < charactersAvailable.size(); i++) {
+                displayMessage((i + 1) + " - " + charactersAvailable.get(i).getName());
+            }
+            displayMessage("Lequel veux-tu voir?");
+
+            int playerChoice = getUserPosInt(charactersAvailable.size());
+            Character chosenCharacter = charactersAvailable.get(playerChoice - 1);
+
+            displayMessage(chosenCharacter.toString());
+            displayCharacterMenu(chosenCharacter);
+        } else {
+            displayMessage("Aucun de créé pour le moment!");
+        }
+    }
 
     public void displayMainMenu() {
         int choicesAvailable = displayMenu();

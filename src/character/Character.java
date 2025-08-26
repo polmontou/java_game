@@ -1,8 +1,10 @@
 package character;
 
+import gamescript.Menu;
 import equipments.OffensiveEquipment;
 
 public class Character {
+    private String[] classesAvailable = {"Warrior", "Wizard"};
     private String type;
     private String name;
     private int health;
@@ -11,11 +13,32 @@ public class Character {
     private int boardPosition;
 
     // Constructor
-    public Character(String type, String name) {
-        this.type = type;
+    public Character() {
+        Menu.displayMessage("Let's go créer ta future saucisse");
+
+        // Name input
+        Menu.displayMessage("Quel sera le nom de ta merguez?");
+        String name = Menu.getUserString();
+
+        // Type of character input
+        Menu.displayMessage("Quelle classe veux-tu jouer?");
+        for (int i = 0; i < this.classesAvailable.length; i++) {
+            Menu.displayMessage(i+1 + " - " + classesAvailable[i]);
+        }
+        int choice = Menu.getUserPosInt(this.classesAvailable.length);
+
+        switch(choice) {
+            case 1:
+                this.type = "warrior";
+                this.health = 10;
+                this.basicAttack = 5;
+                break;
+            case 2:
+                this.type = "wizard";
+                this.health = 6;
+                this.basicAttack = 8;
+        }
         this.name = name;
-        this.health = 10;
-        this.basicAttack = 5;
         this.boardPosition = 0;
     }
     // Setters
@@ -60,7 +83,7 @@ public class Character {
 
     // toString
     public String toString(){
-        return name + " est un " + type.toLowerCase() + " avec " + health + "HP et " + basicAttack + " points d'attaque.";
+        return name + " est un " + type.toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque.";
     }
 
     public void moveCharacter(int throwResult){
