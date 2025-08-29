@@ -1,43 +1,19 @@
 package character;
 
-import gamescript.Menu;
-import equipments.OffensiveEquipment;
+import environment.equipments.defensiveequipment.DefensiveEquipment;
+import environment.equipments.offensiveequipment.OffensiveEquipment;
 
-public class Character {
-    private String[] classesAvailable = {"Warrior", "Wizard"};
-    private String type;
-    private String name;
-    private int health;
-    private int basicAttack;
-    private OffensiveEquipment weapon;
-    private int boardPosition;
+abstract public class Character {
+    protected String type;
+    protected String name;
+    protected int health;
+    protected int basicAttack;
+    protected OffensiveEquipment weapon;
+    protected DefensiveEquipment defense;
+    protected int boardPosition;
 
     // Constructor
-    public Character() {
-        Menu.displayMessage("Let's go créer ta future saucisse");
-
-        // Name input
-        Menu.displayMessage("Quel sera le nom de ta merguez?");
-        String name = Menu.getUserString();
-
-        // Type of character input
-        Menu.displayMessage("Quelle classe veux-tu jouer?");
-        for (int i = 0; i < this.classesAvailable.length; i++) {
-            Menu.displayMessage(i+1 + " - " + classesAvailable[i]);
-        }
-        int choice = Menu.getUserPosInt(this.classesAvailable.length);
-
-        switch(choice) {
-            case 1:
-                this.type = "warrior";
-                this.health = 10;
-                this.basicAttack = 5;
-                break;
-            case 2:
-                this.type = "wizard";
-                this.health = 6;
-                this.basicAttack = 8;
-        }
+    Character(String name) {
         this.name = name;
         this.boardPosition = 0;
     }

@@ -1,14 +1,14 @@
-package equipments;
+package environment.equipments.offensiveequipment;
 
-public class OffensiveEquipment {
-    private String type;
-    private int attackLvl;
-    private String name;
+public abstract class OffensiveEquipment {
+    protected String type;
+    protected int attackLvl;
+    protected String name;
+
     //Constructor
-    public OffensiveEquipment(String type, int attackLvl, String name) {
-        this.type = type;
-        this.attackLvl = attackLvl;
+    public OffensiveEquipment(String name, int attackLvl) {
         this.name = name;
+        this.attackLvl = attackLvl;
     }
     // Setters
     public void setType(String type) {
@@ -33,6 +33,6 @@ public class OffensiveEquipment {
     }
     // toString
     public String toString() {
-        return name + " " + type + " " + attackLvl;
+        return name + " qui est " + (type == "Weapon" ? "une arme" : "un sort") + " qui améliore tes dégâts de freluquet de " + attackLvl + " points.";
     }
 }

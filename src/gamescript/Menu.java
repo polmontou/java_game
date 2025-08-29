@@ -1,8 +1,11 @@
 package gamescript;
 
 import character.Character;
+import character.Warrior;
+import character.Wizard;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class Menu {
 
     /**
      * Displays a message in an easier way than System.out.println
-     * @param message
+     * @param message is the text you want to display
      */
     public static void displayMessage(String message) {
         System.out.println(message);
@@ -39,7 +42,7 @@ public class Menu {
                 if (choice != "") {
                     valid = true;
                 }
-            } catch (java.util.InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 displayMessage("T'es pas la saucisse la plus grillée du paquet toi." +
                         "\nC'est un mot qu'on te demande!");
             }
@@ -64,7 +67,7 @@ public class Menu {
                 } else {
                     displayMessage("Y'a que " + valueMax + " choix tête d'enclume.");
                 }
-            } catch (java.util.InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 displayMessage("T'es pas la saucisse la plus grillée du paquet toi." +
                         "\nChoisis un nombre disponible");
                 input.nextLine();
@@ -101,16 +104,34 @@ public class Menu {
      * Parses user's choice in the beginning menu
      * @param choicesAvailable is how many options are available in the menu
      */
-    private void parseUserMenuChoice(int choicesAvailable) {
+    private void parseUserMenuChoice(int choicesAvailable){
         int userChoice = getUserPosInt(choicesAvailable);
-        String name = "";
-        String type = "";
+        Character player = null;
 
         switch (userChoice) {
             case 1 :
-                Character player1 = new Character();
-                charactersAvailable.add(player1);
-                displayMessage(player1.toString());
+                Menu.displayMessage("Let's go créer ta future saucisse");
+
+                // Name input
+                Menu.displayMessage("Quel sera le nom de ta merguez?");
+                String name = Menu.getUserString();
+
+                // Type of character input
+                Menu.displayMessage("Quelle classe veux-tu jouer?");
+                for (int i = 0; i < this.classesAvailable.length; i++) {
+                    Menu.displayMessage(i+1 + " - " + classesAvailable[i]);
+                }
+                int choice = Menu.getUserPosInt(this.classesAvailable.length);
+
+                switch(choice) {
+                    case 1:
+                        player = new Warrior(name);
+                        break;
+                    case 2:
+                        player = new Wizard(name);
+                }
+                charactersAvailable.add(player);
+                displayMessage(player.toString());
                 break;
 
             case 2 :
@@ -183,7 +204,7 @@ public class Menu {
         }
     }
 
-    public void displayMainMenu() {
+    public void displayMainMenu(){
         int choicesAvailable = displayMenu();
         parseUserMenuChoice(choicesAvailable);
     }

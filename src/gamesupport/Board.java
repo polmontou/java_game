@@ -1,9 +1,34 @@
 package gamesupport;
 
-public class Board {
-    private int cases;
+import java.util.ArrayList;
 
-    public Board() {
-        this.cases = 64;
+public class Board {
+    private ArrayList<Cell> cells;
+    private int cellNumber;
+
+    public Board (int cellNumber) {
+        cells = new ArrayList<Cell>();
+        String content = "empty";
+        for (int i = 1; i <= cellNumber; i++) {
+            switch (i) {
+                case 1 :
+                    content = "empty";
+                    break;
+                case 2:
+                    content = "Potion";
+                    break;
+                case 3 :
+                    content = "Weapon";
+                    break;
+                case 4 :
+                    content = "Enemy";
+            }
+            Cell cell = new Cell(cellNumber, content);
+            cells.add(cell);
+        }
+    }
+
+    public String getCellsContent(int playerPosition) {
+        return this.cells.get(playerPosition-1).toString();
     }
 }
