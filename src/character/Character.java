@@ -8,14 +8,12 @@ abstract public class Character {
     protected String name;
     protected int health;
     protected int basicAttack;
-    protected OffensiveEquipment weapon;
-    protected DefensiveEquipment defense;
-    protected int boardPosition;
+    protected OffensiveEquipment attackItem;
+    protected DefensiveEquipment defenseItem;
 
     // Constructor
     Character(String name) {
         this.name = name;
-        this.boardPosition = 0;
     }
     // Setters
     public void setType(String type) {
@@ -30,11 +28,11 @@ abstract public class Character {
     public void setBasicAttack(int basicAttack) {
         this.basicAttack = basicAttack;
     }
-    public void setWeapon(OffensiveEquipment weapon) {
-        this.weapon = weapon;
+    public void setAttackItem(OffensiveEquipment weapon) {
+        this.attackItem = weapon;
     }
-    public void setBoardPosition(int boardPosition) {
-        this.boardPosition = boardPosition;
+    public void setDefenseItem(DefensiveEquipment defenseItem) {
+        this.defenseItem = defenseItem;
     }
 
     // Getters
@@ -50,11 +48,11 @@ abstract public class Character {
     public int getBasicAttack() {
         return basicAttack;
     }
-    public OffensiveEquipment getWeapon() {
-        return weapon;
+    public OffensiveEquipment getAttackItem() {
+        return attackItem;
     }
-    public int getBoardPosition() {
-        return boardPosition;
+    public DefensiveEquipment getDefenseItem() {
+        return defenseItem;
     }
 
     // toString
@@ -62,7 +60,4 @@ abstract public class Character {
         return name + " est un " + type.toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque.";
     }
 
-    public void moveCharacter(int throwResult){
-        setBoardPosition(this.boardPosition + throwResult);
-    }
 }

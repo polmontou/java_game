@@ -7,11 +7,13 @@ import gamesupport.Board;
 import gamesupport.Dice;
 
 public class Game {
-    Dice dice =  new Dice(1);
-    Board board = new Board(4);
+    private Dice dice;
+    private Board board;
     int playerPosition = 0;
 
     public Game(Character character) {
+        dice = new Dice(1);
+        board = new Board(4);
         play(character);
     }
 
@@ -47,13 +49,13 @@ public class Game {
 
             } catch (CharacterOutOfBoardException e) {
                e.getMessage();
-               character.setBoardPosition(0);
+               playerPosition = 0;
                Menu.displayMessage("Retour case 0! EHEHEHE");
 
             }
 
         }
-            character.setBoardPosition(0);
+            playerPosition = 0;
             Menu.displayMessage("Félicitations, tu es assez grillé pour être mangé!!");
     }
 

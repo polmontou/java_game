@@ -3,16 +3,16 @@ package gamescript;
 import character.Character;
 import character.Warrior;
 import character.Wizard;
+import environment.equipments.offensiveequipment.Weapon;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.List;
 
 public class Menu {
 
     private String[] classesAvailable;
-    private List<Character> charactersAvailable;
+    private ArrayList<Character> charactersAvailable;
 
     public Menu () {
         classesAvailable = new String[] {"Warrior", "Wizard"};
