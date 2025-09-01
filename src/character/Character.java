@@ -4,54 +4,57 @@ import environment.equipments.defensiveequipment.DefensiveEquipment;
 import environment.equipments.offensiveequipment.OffensiveEquipment;
 
 abstract public class Character {
-    protected String type;
-    protected String name;
-    protected int health;
-    protected int basicAttack;
-    protected OffensiveEquipment attackItem;
-    protected DefensiveEquipment defenseItem;
+    private String type;
+    private String name;
+    private int health;
+    private int basicAttack;
+    private OffensiveEquipment attackItem;
+    private DefensiveEquipment defenseItem;
 
     // Constructor
-    Character(String name) {
+    Character(String name, String type, int health, int attack) {
         this.name = name;
+        this.type = type;
+        this.health = health;
+        this.basicAttack = attack;
     }
     // Setters
-    public void setType(String type) {
+    protected void setType(String type) {
         this.type = type;
     }
     public void setName(String name) {
         this.name = name;
     }
-    public void setHealth(int health) {
+    protected void setHealth(int health) {
         this.health = health;
     }
-    public void setBasicAttack(int basicAttack) {
+    protected void setBasicAttack(int basicAttack) {
         this.basicAttack = basicAttack;
     }
-    public void setAttackItem(OffensiveEquipment weapon) {
+    protected void setAttackItem(OffensiveEquipment weapon) {
         this.attackItem = weapon;
     }
-    public void setDefenseItem(DefensiveEquipment defenseItem) {
+    protected void setDefenseItem(DefensiveEquipment defenseItem) {
         this.defenseItem = defenseItem;
     }
 
     // Getters
-    public String getType() {
+    protected String getType() {
         return type;
     }
     public String getName() {
         return name;
     }
-    public int getHealth() {
+    protected int getHealth() {
         return health;
     }
-    public int getBasicAttack() {
+    protected int getBasicAttack() {
         return basicAttack;
     }
-    public OffensiveEquipment getAttackItem() {
+    protected OffensiveEquipment getAttackItem() {
         return attackItem;
     }
-    public DefensiveEquipment getDefenseItem() {
+    protected DefensiveEquipment getDefenseItem() {
         return defenseItem;
     }
 

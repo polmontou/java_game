@@ -1,34 +1,35 @@
 package environment.equipments.offensiveequipment;
 
 public abstract class OffensiveEquipment {
-    protected String type;
-    protected int attackLvl;
-    protected String name;
+    private String name;
+    private String type;
+    private int attackLvl;
 
     //Constructor
-    public OffensiveEquipment(String name, int attackLvl) {
+    public OffensiveEquipment(String name, String type, int attackLvl) {
         this.name = name;
+        this.type = type;
         this.attackLvl = attackLvl;
     }
     // Setters
-    public void setType(String type) {
+    protected void setType(String type) {
         this.type = type;
     }
-    public void setAttackLvl(int attackLvl) {
+    protected void setAttackLvl(int attackLvl) {
         this.attackLvl = attackLvl;
     }
-    public void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
     // Getters
-    public String getType() {
+    protected String getType() {
         return type;
     }
-    public int getAttackLvl() {
+    protected int getAttackLvl() {
         return attackLvl;
     }
-    public String getName() {
+    protected String getName() {
         return name;
     }
     // toString

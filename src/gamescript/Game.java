@@ -9,11 +9,12 @@ import gamesupport.Dice;
 public class Game {
     private Dice dice;
     private Board board;
-    int playerPosition = 0;
+    private int playerPosition;
 
     public Game(Character character) {
-        dice = new Dice(1);
-        board = new Board(4);
+        dice = new Dice(6);
+        board = new Board(64);
+        playerPosition = 0;
         play(character);
     }
 
@@ -84,5 +85,4 @@ public class Game {
         }
         return 0;
     }
-
 }
