@@ -3,6 +3,7 @@ package gamescript;
 import character.Character;
 import character.Warrior;
 import character.Wizard;
+import db.CharacterTable;
 import environment.equipments.offensiveequipment.Weapon;
 
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ public class Menu {
 
     private String[] classesAvailable;
     private ArrayList<Character> charactersAvailable;
+    private CharacterTable characterTable;
 
     public Menu () {
         classesAvailable = new String[] {"Warrior", "Wizard"};
         charactersAvailable = new ArrayList<Character>();
+        characterTable = new CharacterTable();
     }
 
     /**
@@ -107,6 +110,7 @@ public class Menu {
     private void parseUserMenuChoice(int choicesAvailable){
         int userChoice = getUserPosInt(choicesAvailable);
         Character player = null;
+        int newId;
 
         switch (userChoice) {
             case 1 :
@@ -132,6 +136,10 @@ public class Menu {
                 }
                 charactersAvailable.add(player);
                 displayMessage(player.toString());
+
+                newId = characterTable.createCharacter(player);
+                player.setId(newId);
+
                 break;
 
             case 2 :
@@ -174,6 +182,7 @@ public class Menu {
         switch (choice) {
             case 1 :
                 character.setName(getUserString());
+                characterTable.updateCharacter(character);
                 break;
             case 2 :
                 charactersAvailable.remove(character);
@@ -187,14 +196,18 @@ public class Menu {
      * Displays all the characters created
      */
     public void displayCharacters() {
-        if (!charactersAvailable.isEmpty()) {
+        ArrayList<Object[]> characters = this.characterTable.getCharacters();
+
+        if (!characters.isEmpty()) {
             displayMessage("Vos personnages :");
-            for (int i = 0; i < charactersAvailable.size(); i++) {
+            for (int i = 0; i < characters.size(); i++) {
+                Character character = getCharacter(characters, i);
+                charactersAvailable.add(character);
                 displayMessage((i + 1) + " - " + charactersAvailable.get(i).getName());
             }
             displayMessage("Lequel veux-tu voir?");
 
-            int playerChoice = getUserPosInt(charactersAvailable.size());
+            int playerChoice = getUserPosInt(characters.size());
             Character chosenCharacter = charactersAvailable.get(playerChoice - 1);
 
             displayMessage(chosenCharacter.toString());
@@ -204,8 +217,26 @@ public class Menu {
         }
     }
 
+    private static Character getCharacter(ArrayList<Object[]> characters, int i) {
+        Character character = null ;
+        int id = (int) characters.get(i)[0];
+        String name = (String) characters.get(i)[1];
+        String type = (String) characters.get(i)[2];
+
+        switch (type) {
+            case "Warrior":
+                character = new Warrior(name);
+                break;
+            case "Wizard":
+                character = new Wizard(name);
+        }
+        character.setId(id);
+        return character;
+    }
+
     public void displayMainMenu(){
         int choicesAvailable = displayMenu();
         parseUserMenuChoice(choicesAvailable);
     }
+
 }

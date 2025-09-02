@@ -4,6 +4,7 @@ import environment.equipments.defensiveequipment.DefensiveEquipment;
 import environment.equipments.offensiveequipment.OffensiveEquipment;
 
 abstract public class Character {
+    private int id;
     private String type;
     private String name;
     private int health;
@@ -25,6 +26,9 @@ abstract public class Character {
     public void setName(String name) {
         this.name = name;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
     protected void setHealth(int health) {
         this.health = health;
     }
@@ -39,22 +43,21 @@ abstract public class Character {
     }
 
     // Getters
-    protected String getType() {
+    public int getId() { return id;}
+    public String getType() {
         return type;
     }
-    public String getName() {
-        return name;
-    }
-    protected int getHealth() {
+    public String getName() { return name; }
+    public int getHealth() {
         return health;
     }
-    protected int getBasicAttack() {
+    public int getBasicAttack() {
         return basicAttack;
     }
-    protected OffensiveEquipment getAttackItem() {
+    public OffensiveEquipment getAttackItem() {
         return attackItem;
     }
-    protected DefensiveEquipment getDefenseItem() {
+    public DefensiveEquipment getDefenseItem() {
         return defenseItem;
     }
 

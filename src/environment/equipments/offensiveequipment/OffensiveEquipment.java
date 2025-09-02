@@ -23,13 +23,13 @@ public abstract class OffensiveEquipment {
     }
 
     // Getters
-    protected String getType() {
+    public String getType() {
         return type;
     }
-    protected int getAttackLvl() {
+    public int getAttackLvl() {
         return attackLvl;
     }
-    protected String getName() {
+    public String getName() {
         return name;
     }
     // toString

@@ -18,10 +18,10 @@ abstract public class DefensiveEquipment {
     }
 
     // Getters
-    protected String getType() {
+    public String getType() {
         return type;
     }
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
