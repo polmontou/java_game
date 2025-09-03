@@ -47,6 +47,7 @@ public class Game {
                     Menu.displayMessage("Tu es donc en case " + playerPosition);
                     String currentCellContent = board.getCellsContent(playerPosition);
                     Menu.displayMessage(currentCellContent);
+
                 }
 
             } catch (CharacterOutOfBoardException e) {

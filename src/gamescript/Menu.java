@@ -13,15 +13,24 @@ import java.util.Scanner;
 public class Menu {
 
     private String[] classesAvailable;
-    private ArrayList<Character> charactersAvailable;
+    private ArrayList<Object[]> charactersAvailableDb;
+    private ArrayList<Character> charactersAvailableScript;
     private CharacterTable characterTable;
 
     public Menu () {
         classesAvailable = new String[] {"Warrior", "Wizard"};
-        charactersAvailable = new ArrayList<Character>();
+        charactersAvailableScript = new ArrayList<Character>();
         characterTable = new CharacterTable();
-    }
+        charactersAvailableDb = this.characterTable.getCharacters();
 
+        fetchCharactersFromDbInScript();
+    }
+    private void fetchCharactersFromDbInScript() {
+        for (Object[] character : this.charactersAvailableDb) {
+            Character newCharacter = getCharacter(character);
+            charactersAvailableScript.add(newCharacter);
+        }
+    }
     /**
      * Displays a message in an easier way than System.out.println
      * @param message is the text you want to display
@@ -134,7 +143,7 @@ public class Menu {
                     case 2:
                         player = new Wizard(name);
                 }
-                charactersAvailable.add(player);
+                charactersAvailableScript.add(player);
                 displayMessage(player.toString());
 
                 newId = characterTable.createCharacter(player);
@@ -147,9 +156,12 @@ public class Menu {
                 break;
 
             case 3 :
-                if (!charactersAvailable.isEmpty()) {
-                    if(charactersAvailable.size() == 1) {
-                        Game game = new Game(charactersAvailable.get(0));
+                if (!charactersAvailableScript.isEmpty()) {
+                    if(charactersAvailableScript.size() == 1) {
+                        Game game = new Game(charactersAvailableScript.get(0));
+                    } else {
+                        choice = displayCharacterChoice();
+                        Game game = new Game(charactersAvailableScript.get(choice-1));
                     }
                 }
                 break;
@@ -160,6 +172,14 @@ public class Menu {
         }
     }
 
+    private int displayCharacterChoice() {
+        displayMessage("A qui c'est le tour de griller?");
+        for  (int i = 0; i < this.charactersAvailableScript.size(); i++) {
+            Menu.displayMessage((i+1) + " - " + this.charactersAvailableScript.get(i).getName());
+        }
+        int choice = getUserPosInt(this.charactersAvailableScript.size());
+        return choice;
+    }
     /**
      * Displays the menu when user is checking a specific character in the menu
      * @param character is the character checked by user
@@ -185,7 +205,7 @@ public class Menu {
                 characterTable.updateCharacter(character);
                 break;
             case 2 :
-                charactersAvailable.remove(character);
+                charactersAvailableScript.remove(character);
                 break;
             case 3 :
                 break;
@@ -196,19 +216,16 @@ public class Menu {
      * Displays all the characters created
      */
     public void displayCharacters() {
-        ArrayList<Object[]> characters = this.characterTable.getCharacters();
 
-        if (!characters.isEmpty()) {
+        if (!charactersAvailableScript.isEmpty()) {
             displayMessage("Vos personnages :");
-            for (int i = 0; i < characters.size(); i++) {
-                Character character = getCharacter(characters, i);
-                charactersAvailable.add(character);
-                displayMessage((i + 1) + " - " + charactersAvailable.get(i).getName());
+            for (int i = 0; i < charactersAvailableScript.size(); i++) {
+                displayMessage((i + 1) + " - " + charactersAvailableScript.get(i).getName());
             }
             displayMessage("Lequel veux-tu voir?");
 
-            int playerChoice = getUserPosInt(characters.size());
-            Character chosenCharacter = charactersAvailable.get(playerChoice - 1);
+            int playerChoice = getUserPosInt(charactersAvailableScript.size());
+            Character chosenCharacter = charactersAvailableScript.get(playerChoice - 1);
 
             displayMessage(chosenCharacter.toString());
             displayCharacterMenu(chosenCharacter);
@@ -217,21 +234,21 @@ public class Menu {
         }
     }
 
-    private static Character getCharacter(ArrayList<Object[]> characters, int i) {
-        Character character = null ;
-        int id = (int) characters.get(i)[0];
-        String name = (String) characters.get(i)[1];
-        String type = (String) characters.get(i)[2];
+    private static Character getCharacter(Object[] character) {
+        Character newCharacter = null ;
+        int id = (int) character[0];
+        String name = (String) character[1];
+        String type = (String) character[2];
 
         switch (type) {
             case "Warrior":
-                character = new Warrior(name);
+                newCharacter = new Warrior(name);
                 break;
             case "Wizard":
-                character = new Wizard(name);
+                newCharacter = new Wizard(name);
         }
-        character.setId(id);
-        return character;
+        newCharacter.setId(id);
+        return newCharacter;
     }
 
     public void displayMainMenu(){
