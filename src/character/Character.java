@@ -29,16 +29,16 @@ abstract public class Character {
     public void setId(int id) {
         this.id = id;
     }
-    protected void setHealth(int health) {
+    public void setHealth(int health) {
         this.health = health;
     }
     protected void setBasicAttack(int basicAttack) {
         this.basicAttack = basicAttack;
     }
-    protected void setAttackItem(OffensiveEquipment weapon) {
+    public void setAttackItem(OffensiveEquipment weapon) {
         this.attackItem = weapon;
     }
-    protected void setDefenseItem(DefensiveEquipment defenseItem) {
+    public void setDefenseItem(DefensiveEquipment defenseItem) {
         this.defenseItem = defenseItem;
     }
 
@@ -46,6 +46,18 @@ abstract public class Character {
     public int getId() { return id;}
     public String getType() {
         return type;
+    }
+    public String getFrenchType() {
+        String frenchType = "";
+        switch (this.type) {
+            case "Warrior":
+                frenchType = "Guerrier";
+                break;
+            case "Wizard":
+                frenchType = "Magicien";
+                break;
+        }
+        return frenchType;
     }
     public String getName() { return name; }
     public int getHealth() {
@@ -61,9 +73,16 @@ abstract public class Character {
         return defenseItem;
     }
 
+    //public
+
+    public void getHealed(int healLvl) {
+        int newHealth = health + healLvl;
+        setHealth(newHealth);
+    }
+
     // toString
     public String toString(){
-        return name + " est un " + type.toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque.";
+        return name + " est un " + getFrenchType().toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque.";
     }
 
 }

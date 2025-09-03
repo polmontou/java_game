@@ -1,7 +1,5 @@
 package character;
 
-import environment.equipments.offensiveequipment.Spell;
-
 public class Wizard extends Character {
 
     public Wizard(String name) {

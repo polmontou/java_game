@@ -32,8 +32,24 @@ public abstract class OffensiveEquipment {
     public String getName() {
         return name;
     }
-    // toString
+
+    //toString
     public String toString() {
-        return name + " qui est " + (type == "Weapon" ? "une arme" : "un sort") + " qui améliore tes dégâts de freluquet de " + attackLvl + " points.";
+        String frenchType = "";
+        switch (type){
+            case "club":
+                frenchType = "e massue";
+                break;
+            case "fireball":
+                frenchType = "e boule de feu";
+                break;
+            case "thunder":
+                frenchType = " éclair";
+                break;
+            case "sword":
+                frenchType = "e épée";
+                break;
+        }
+        return name + ". C'est un"+ frenchType +". Ça améliore tes dégâts de freluquet de" + getAttackLvl() + " points.";
     }
 }

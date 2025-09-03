@@ -1,5 +1,7 @@
 package gamesupport.cells;
 
+import character.Character;
+
 abstract public class Cell {
     protected boolean isEmpty;
 
@@ -10,4 +12,6 @@ abstract public class Cell {
     public String toString() {
         return "Tu tombes sur : ";
     }
+
+    public abstract void interact(Character character);
 }

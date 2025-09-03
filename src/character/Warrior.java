@@ -1,7 +1,5 @@
 package character;
 
-import environment.equipments.offensiveequipment.Weapon;
-
 public class Warrior extends Character {
 
     public Warrior(String name) {

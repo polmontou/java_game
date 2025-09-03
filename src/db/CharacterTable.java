@@ -3,6 +3,8 @@ package db;
 
 
 import character.Character;
+import com.google.gson.Gson;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -67,6 +69,18 @@ public class CharacterTable {
     }
 
     public void updateCharacter(Character character) {
+        String attackItem = "none";
+        String defenseItem = "none";
+
+        if(character.getAttackItem() != null) {
+            Gson gson = new Gson();
+            attackItem = gson.toJson(character.getAttackItem());
+        }
+        if(character.getDefenseItem() != null) {
+            Gson gson = new Gson();
+            defenseItem = gson.toJson(character.getDefenseItem());
+        }
+
         try {
             Connection conn = this.dbc.getConnection();
             String updateSql = "UPDATE characters SET name = ?, type = ?, health = ?, basic_attack = ?, offensive_equipment = ?, defensive_equipment = ? WHERE id = ?";
@@ -76,8 +90,8 @@ public class CharacterTable {
             pstmt.setString(2, character.getType());
             pstmt.setInt(3, character.getHealth());
             pstmt.setInt(4, character.getBasicAttack());
-            pstmt.setString(5, (character.getAttackItem() != null ? character.getAttackItem().getName() : "none"));
-            pstmt.setString(6, (character.getDefenseItem() != null ? character.getDefenseItem().getName() : "none"));
+            pstmt.setString(5, attackItem);
+            pstmt.setString(6, defenseItem);
             pstmt.setInt(7, character.getId());
 
             pstmt.executeUpdate();
@@ -94,6 +108,20 @@ public class CharacterTable {
 
             pstmt.setInt(1, character.getHealth());
             pstmt.setInt(2, character.getId());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCharacter(Character character) {
+        try {
+            Connection conn = this.dbc.getConnection();
+            String deleteSql = "DELETE FROM characters WHERE id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(deleteSql);
+
+            pstmt.setInt(1, character.getId());
+            pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }

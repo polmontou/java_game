@@ -4,7 +4,6 @@ import character.Character;
 import character.Warrior;
 import character.Wizard;
 import db.CharacterTable;
-import environment.equipments.offensiveequipment.Weapon;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -23,9 +22,9 @@ public class Menu {
         characterTable = new CharacterTable();
         charactersAvailableDb = this.characterTable.getCharacters();
 
-        fetchCharactersFromDbInScript();
+        charactersFromDbToScript();
     }
-    private void fetchCharactersFromDbInScript() {
+    private void charactersFromDbToScript() {
         for (Object[] character : this.charactersAvailableDb) {
             Character newCharacter = getCharacter(character);
             charactersAvailableScript.add(newCharacter);
@@ -43,7 +42,7 @@ public class Menu {
      * Uses Scanner to get user's answer and checks if it's a string
      * @return user's string answer
      */
-    public static String getUserString() {
+    public String getUserString() {
         Scanner input = new Scanner(System.in);
         boolean valid = false;
         String choice = "";
@@ -66,7 +65,7 @@ public class Menu {
      * Uses Scanner to get user's answer and checks if it's an int
      * @return user's int answer
      */
-    public static int getUserPosInt(int valueMax) {
+    public int getUserPosInt(int valueMax) {
         Scanner input = new Scanner(System.in);
         boolean valid = false;
         int choice = -1;
@@ -123,18 +122,18 @@ public class Menu {
 
         switch (userChoice) {
             case 1 :
-                Menu.displayMessage("Let's go créer ta future saucisse");
+                displayMessage("Let's go créer ta future saucisse");
 
                 // Name input
-                Menu.displayMessage("Quel sera le nom de ta merguez?");
-                String name = Menu.getUserString();
+                displayMessage("Quel sera le nom de ta merguez?");
+                String name = getUserString();
 
                 // Type of character input
-                Menu.displayMessage("Quelle classe veux-tu jouer?");
+                displayMessage("Quelle classe veux-tu jouer?");
                 for (int i = 0; i < this.classesAvailable.length; i++) {
-                    Menu.displayMessage(i+1 + " - " + classesAvailable[i]);
+                    displayMessage(i+1 + " - " + classesAvailable[i]);
                 }
-                int choice = Menu.getUserPosInt(this.classesAvailable.length);
+                int choice = getUserPosInt(this.classesAvailable.length);
 
                 switch(choice) {
                     case 1:
@@ -175,7 +174,7 @@ public class Menu {
     private int displayCharacterChoice() {
         displayMessage("A qui c'est le tour de griller?");
         for  (int i = 0; i < this.charactersAvailableScript.size(); i++) {
-            Menu.displayMessage((i+1) + " - " + this.charactersAvailableScript.get(i).getName());
+            displayMessage((i+1) + " - " + this.charactersAvailableScript.get(i).getName()+ " le " +this.charactersAvailableScript.get(i).getFrenchType());
         }
         int choice = getUserPosInt(this.charactersAvailableScript.size());
         return choice;
@@ -206,6 +205,7 @@ public class Menu {
                 break;
             case 2 :
                 charactersAvailableScript.remove(character);
+                characterTable.deleteCharacter(character);
                 break;
             case 3 :
                 break;
@@ -220,7 +220,7 @@ public class Menu {
         if (!charactersAvailableScript.isEmpty()) {
             displayMessage("Vos personnages :");
             for (int i = 0; i < charactersAvailableScript.size(); i++) {
-                displayMessage((i + 1) + " - " + charactersAvailableScript.get(i).getName());
+                displayMessage((i + 1) + " - " + charactersAvailableScript.get(i).getName()+" le "+charactersAvailableScript.get(i).getFrenchType());
             }
             displayMessage("Lequel veux-tu voir?");
 
@@ -256,4 +256,7 @@ public class Menu {
         parseUserMenuChoice(choicesAvailable);
     }
 
+    public void updateCharacter(Character character) {
+        characterTable.updateCharacter(character);
+    }
 }
