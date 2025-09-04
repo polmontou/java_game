@@ -4,8 +4,8 @@ import environment.equipments.offensiveequipment.OffensiveEquipment;
 
 abstract public class Spell extends OffensiveEquipment {
 
-    public Spell(String name, int attackLvl) {
-        super(name, "Spell", attackLvl);
+    public Spell(String name, String type, int attackLvl) {
+        super(name, type, attackLvl);
     }
 
     static public Spell fireballOrThunder() {

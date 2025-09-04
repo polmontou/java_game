@@ -12,23 +12,15 @@ import java.util.Scanner;
 public class Menu {
 
     private String[] classesAvailable;
-    private ArrayList<Object[]> charactersAvailableDb;
     private ArrayList<Character> charactersAvailableScript;
     private CharacterTable characterTable;
 
     public Menu () {
         classesAvailable = new String[] {"Warrior", "Wizard"};
-        charactersAvailableScript = new ArrayList<Character>();
         characterTable = new CharacterTable();
-        charactersAvailableDb = this.characterTable.getCharacters();
+        charactersAvailableScript = new ArrayList<Character>();
+        charactersAvailableScript = this.characterTable.getCharacters();
 
-        charactersFromDbToScript();
-    }
-    private void charactersFromDbToScript() {
-        for (Object[] character : this.charactersAvailableDb) {
-            Character newCharacter = getCharacter(character);
-            charactersAvailableScript.add(newCharacter);
-        }
     }
     /**
      * Displays a message in an easier way than System.out.println
@@ -184,7 +176,7 @@ public class Menu {
      * @param character is the character checked by user
      */
     private void displayCharacterMenu(Character character) {
-        displayMessage("Que veux-tu faire sur "+ character.getName()+"?"+
+        displayMessage("\nQue veux-tu faire sur "+ character.getName()+"?"+
                 "\n1 - Le renommer"+
                 "\n2 - Le supprimer"+
                 "\n3 - I'm going, going back, back to Cali, Cali (retour au menu d'avant)");
@@ -232,23 +224,6 @@ public class Menu {
         } else {
             displayMessage("Aucun de créé pour le moment!");
         }
-    }
-
-    private static Character getCharacter(Object[] character) {
-        Character newCharacter = null ;
-        int id = (int) character[0];
-        String name = (String) character[1];
-        String type = (String) character[2];
-
-        switch (type) {
-            case "Warrior":
-                newCharacter = new Warrior(name);
-                break;
-            case "Wizard":
-                newCharacter = new Wizard(name);
-        }
-        newCharacter.setId(id);
-        return newCharacter;
     }
 
     public void displayMainMenu(){

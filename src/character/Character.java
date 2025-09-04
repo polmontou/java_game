@@ -1,16 +1,20 @@
 package character;
 
+import environment.enemies.Enemy;
 import environment.equipments.defensiveequipment.DefensiveEquipment;
+import environment.equipments.defensiveequipment.Shield;
 import environment.equipments.offensiveequipment.OffensiveEquipment;
+import gamescript.Menu;
+import interfaces.IFighter;
 
-abstract public class Character {
+abstract public class Character implements IFighter {
     private int id;
     private String type;
     private String name;
     private int health;
     private int basicAttack;
     private OffensiveEquipment attackItem;
-    private DefensiveEquipment defenseItem;
+    private Shield defenseItem;
 
     // Constructor
     Character(String name, String type, int health, int attack) {
@@ -38,7 +42,7 @@ abstract public class Character {
     public void setAttackItem(OffensiveEquipment weapon) {
         this.attackItem = weapon;
     }
-    public void setDefenseItem(DefensiveEquipment defenseItem) {
+    public void setDefenseItem(Shield defenseItem) {
         this.defenseItem = defenseItem;
     }
 
@@ -69,7 +73,7 @@ abstract public class Character {
     public OffensiveEquipment getAttackItem() {
         return attackItem;
     }
-    public DefensiveEquipment getDefenseItem() {
+    public Shield getDefenseItem() {
         return defenseItem;
     }
 
@@ -82,7 +86,36 @@ abstract public class Character {
 
     // toString
     public String toString(){
-        return name + " est un " + getFrenchType().toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque.";
+        return name + " est un " + getFrenchType().toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque." + (getAttackItem() != null ? "\nVous avez un "+getAttackItem().getName() + " qui améliore vos dégats de "+getAttackItem().getAttackLvl()+" points." : "");
+    }
+
+
+    //Interface methods
+    public int attack() {
+        return getBasicAttack() + (getAttackItem() != null ? getAttackItem().getAttackLvl() : 0);
+    }
+
+    public void receiveDamage(int enemyDamage) {
+        int damage = enemyDamage;
+        if (getDefenseItem() != null) {
+            damage = enemyDamage - getDefenseItem().getDefenseLvl();
+            int remainingShieldPoint = getDefenseItem().getDefenseLvl() - enemyDamage;
+
+            if (remainingShieldPoint > 0) {
+                getDefenseItem().setDefenseLvl(remainingShieldPoint);
+            } else {
+                Menu.displayMessage(getDefenseItem().getName()+" est détruit par la force de cette frappe!");
+                setDefenseItem(null);
+            }
+        }
+
+        int remainingHealth = getHealth() - damage;
+        if (remainingHealth > 0) {
+            setHealth(remainingHealth);
+            Menu.displayMessage(getName() + " subit " + enemyDamage + " dégats ce qui lui laisse encore " + getHealth()+" HP!");
+        } else {
+            Menu.displayMessage(getName()+" est moooooort! Il brûle tel un petit champignon passé à travers la grille du barbeuc' AHAHAHA");
+        }
     }
 
 }

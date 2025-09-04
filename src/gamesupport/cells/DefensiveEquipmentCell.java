@@ -52,6 +52,8 @@ public class DefensiveEquipmentCell extends Cell{
                     character.setHealth(10);
                 }
             }
+        } else {
+            character.setDefenseItem((Shield)this.defensiveEquipmentContent);
         }
     }
 

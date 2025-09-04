@@ -1,6 +1,9 @@
 package environment.enemies;
 
-abstract public class Enemy {
+import gamescript.Menu;
+import interfaces.IFighter;
+
+abstract public class Enemy implements IFighter {
     private String name;
     private int health;
     private int basicAttack;
@@ -11,6 +14,20 @@ abstract public class Enemy {
         this.health = health;
         this.basicAttack = basicAttack;
         this.type = type;
+    }
+    //Getter
+    public String getName() {
+        return name;
+    }
+    public int getHealth() {
+        return health;
+    }
+    public int getBasicAttack() {
+        return basicAttack;
+    }
+    //Setter
+    public void setHealth(int health) {
+        this.health = health;
     }
 
     static public Enemy randomEnemy() {
@@ -46,5 +63,19 @@ abstract public class Enemy {
     //toString
     public String toString() {
          return name + ". C'est un "+ getFrenchType() +" qui a "+health+" HP. \nBon chance petite saucissette!";
+    }
+
+    public int attack() {
+        return getBasicAttack();
+    }
+
+    public void receiveDamage(int playerDamage) {
+        int remainingHealth = getHealth()-playerDamage;
+        setHealth(remainingHealth);
+        if (remainingHealth > 0) {
+            Menu.displayMessage(getName() + " subit " + playerDamage + " dégats ce qui lui laisse encore " + getHealth()+" HP!");
+        } else {
+            Menu.displayMessage(getName()+" est moooooort! Il brûle tel un petit champignon passé à travers la grille du barbeuc' AHAHAHA");
+        }
     }
 }

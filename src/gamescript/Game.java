@@ -9,13 +9,13 @@ import gamesupport.Dice;
 
 public class Game {
     private Menu menu;
-    private Dice dice;
+    private Dice dice6;
     private Board board;
     private int playerPosition;
 
     public Game(Character character) {
         menu = new Menu();
-        dice = new Dice(6);
+        dice6 = new Dice(6);
         board = new Board(4,10,10,5,4,5,2,6,2, 64);
         playerPosition = 0;
         play(character);
@@ -29,12 +29,12 @@ public class Game {
     private void play(Character character) {
         boolean playerIsOnCase64 = false;
 
-        menu.displayMessage("Bon chance en enfer!"+
+        Menu.displayMessage("Bon chance en enfer!"+
                 "\nTu es sur la case " + playerPosition);
 
         while (!playerIsOnCase64) {
             try {
-                menu.displayMessage(
+                Menu.displayMessage(
                         "\nQue veux-tu faire?" +
                                 "\n1 - Lancer le dé" +
                                 "\n2 - Quitter la partie");
@@ -46,9 +46,9 @@ public class Game {
                     playerPosition += result;
                     playerIsOnCase64 = parseCharacterPosition(playerPosition);
 
-                    menu.displayMessage("Tu es donc en case " + playerPosition);
+                    Menu.displayMessage("Tu es donc en case " + playerPosition);
                     String currentCellContent = board.getCellsContent(playerPosition);
-                    menu.displayMessage(currentCellContent);
+                    Menu.displayMessage(currentCellContent);
                     board.interactWithCell(playerPosition, character);
                     menu.updateCharacter(character);
                 }
@@ -56,13 +56,13 @@ public class Game {
             } catch (CharacterOutOfBoardException e) {
                e.getMessage();
                playerPosition = 0;
-               menu.displayMessage("Retour case 0! EHEHEHE");
+               Menu.displayMessage("Retour case 0! EHEHEHE");
 
             }
 
         }
             playerPosition = 0;
-            menu.displayMessage("Félicitations, tu es assez grillé pour être mangé!!");
+            Menu.displayMessage("Félicitations, tu es assez grillé pour être mangé!!");
     }
 
     private boolean parseCharacterPosition(int characterPosition) throws CharacterOutOfBoardException {
@@ -82,8 +82,8 @@ public class Game {
     private int parseUserTurnChoice(int choice) {
         switch (choice) {
             case 1 :
-                int throwResult = dice.roll();
-                menu.displayMessage("Tu as fait un " + throwResult);
+                int throwResult = dice6.roll();
+                Menu.displayMessage("Tu as fait un " + throwResult);
                 return throwResult;
             case 2 :
                 return -1;

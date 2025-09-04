@@ -5,6 +5,7 @@ import environment.enemies.Dragon;
 import environment.enemies.Enemy;
 import environment.enemies.Goblin;
 import environment.enemies.Sorcerer;
+import gamescript.Fight;
 import gamescript.Menu;
 
 public class EnemyCell extends Cell {
@@ -29,7 +30,8 @@ public class EnemyCell extends Cell {
 
     @Override
     public void interact(Character character){
-        Menu.displayMessage("FIGHT");
+        Menu.displayMessage("COUcOU");
+        //Fight fight = new Fight(character, this.enemy);
     }
 
     @Override
