@@ -1,6 +1,7 @@
 package gamesupport.cells;
 
 import character.Character;
+import gamescript.Game;
 
 public class EmptyCell extends Cell {
 
@@ -15,7 +16,7 @@ public class EmptyCell extends Cell {
     }
 
     @Override
-    public void interact(Character character) {
+    public void interact(Character character, Game game) {
 
     }
 

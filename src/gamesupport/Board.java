@@ -1,5 +1,7 @@
 package gamesupport;
 
+import exceptions.DeadCharacter;
+import gamescript.Game;
 import gamesupport.cells.*;
 import character.Character;
 import java.util.ArrayList;
@@ -50,9 +52,9 @@ public class Board {
     }
 
 
-    public void interactWithCell(int playerPosition, Character character) {
+    public void interactWithCell(int playerPosition, Character character, Game game) throws DeadCharacter {
         Cell cell = cells.get(playerPosition-1);
-        cell.interact(character);
+        cell.interact(character, game);
     }
 
     public String getCellsContent(int playerPosition) {

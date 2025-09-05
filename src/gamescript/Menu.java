@@ -4,6 +4,7 @@ import character.Character;
 import character.Warrior;
 import character.Wizard;
 import db.CharacterTable;
+import gamesupport.Dice;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -148,12 +149,15 @@ public class Menu {
 
             case 3 :
                 if (!charactersAvailableScript.isEmpty()) {
+                    Character chosenCharacter;
                     if(charactersAvailableScript.size() == 1) {
-                        Game game = new Game(charactersAvailableScript.get(0));
+                        chosenCharacter = charactersAvailableScript.get(0);
                     } else {
                         choice = displayCharacterChoice();
-                        Game game = new Game(charactersAvailableScript.get(choice-1));
+                        chosenCharacter = charactersAvailableScript.get(choice-1);
                     }
+                    Menu.displayMessage("Tu commences une partie avec "+chosenCharacter.getName()+" le "+chosenCharacter.getFrenchType());
+                    Game game = new Game(chosenCharacter);
                 }
                 break;
 

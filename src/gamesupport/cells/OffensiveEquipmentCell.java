@@ -14,6 +14,7 @@ import environment.equipments.offensiveequipment.spell.Thunder;
 import environment.equipments.offensiveequipment.weapon.Club;
 import environment.equipments.offensiveequipment.weapon.Sword;
 import environment.equipments.offensiveequipment.weapon.Weapon;
+import gamescript.Game;
 import gamescript.Menu;
 
 public class OffensiveEquipmentCell extends Cell {
@@ -45,13 +46,13 @@ public class OffensiveEquipmentCell extends Cell {
     }
 
     @Override
-    public void interact(Character character){
+    public void interact(Character character, Game game){
         if(compatibilityTest(character)){
             character.setAttackItem(offensiveEquipmentContent);
-            Menu.displayMessage("Vous ramassez "+offensiveEquipmentContent.getName()+" !");
-            Menu.displayMessage("Vous avez maintenant "+(character.getBasicAttack()+offensiveEquipmentContent.getAttackLvl())+" points d'attaque!");
+            Menu.displayMessage("Tu ramasses l'équipement : ça améliore tes dégâts d'attaque de "+offensiveEquipmentContent.getAttackLvl()+" points !");
+            Menu.displayMessage("Tu as maintenant "+(character.getBasicAttack()+offensiveEquipmentContent.getAttackLvl())+" points d'attaque!");
         } else {
-            Menu.displayMessage("Laisse ça tranquille, tu vas te faire mal. C'est par pour les petits "+character.getFrenchType()+"s.");
+            Menu.displayMessage("C'est par pour les petits "+character.getFrenchType().toLowerCase()+"s. Laisse ça tranquille, tu vas te faire mal.");
         }
     }
 

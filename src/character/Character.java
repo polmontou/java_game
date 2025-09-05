@@ -4,6 +4,7 @@ import environment.enemies.Enemy;
 import environment.equipments.defensiveequipment.DefensiveEquipment;
 import environment.equipments.defensiveequipment.Shield;
 import environment.equipments.offensiveequipment.OffensiveEquipment;
+import exceptions.DeadCharacter;
 import gamescript.Menu;
 import interfaces.IFighter;
 
@@ -86,7 +87,7 @@ abstract public class Character implements IFighter {
 
     // toString
     public String toString(){
-        return name + " est un " + getFrenchType().toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque." + (getAttackItem() != null ? "\nVous avez un "+getAttackItem().getName() + " qui améliore vos dégats de "+getAttackItem().getAttackLvl()+" points." : "");
+        return name + " est un " + getFrenchType().toLowerCase() + " avec " + health + " HP et " + basicAttack + " points d'attaque." + (getAttackItem() != null ? "\nIl a un "+getAttackItem().getName() + " qui améliore vos dégats de "+getAttackItem().getAttackLvl()+" points." : "");
     }
 
 
@@ -95,7 +96,7 @@ abstract public class Character implements IFighter {
         return getBasicAttack() + (getAttackItem() != null ? getAttackItem().getAttackLvl() : 0);
     }
 
-    public void receiveDamage(int enemyDamage) {
+    public void receiveDamage(int enemyDamage) throws DeadCharacter{
         int damage = enemyDamage;
         if (getDefenseItem() != null) {
             damage = enemyDamage - getDefenseItem().getDefenseLvl();
@@ -110,11 +111,15 @@ abstract public class Character implements IFighter {
         }
 
         int remainingHealth = getHealth() - damage;
-        if (remainingHealth > 0) {
-            setHealth(remainingHealth);
-            Menu.displayMessage(getName() + " subit " + enemyDamage + " dégats ce qui lui laisse encore " + getHealth()+" HP!");
+        if (remainingHealth <= 0) {
+            remainingHealth = 0;
+        }
+        setHealth(remainingHealth);
+        Menu.displayMessage("Tu subis " + enemyDamage + " dégats.");
+        if (getHealth() > 0) {
+            Menu.displayMessage("Il te reste encore " + getHealth() + " HP!");
         } else {
-            Menu.displayMessage(getName()+" est moooooort! Il brûle tel un petit champignon passé à travers la grille du barbeuc' AHAHAHA");
+            throw new DeadCharacter("A trop s'approcher de la braise, on finit par devenir appétissant MOUAHAHA\nYou're dead small sausage.");
         }
     }
 

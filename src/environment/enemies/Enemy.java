@@ -72,8 +72,9 @@ abstract public class Enemy implements IFighter {
     public void receiveDamage(int playerDamage) {
         int remainingHealth = getHealth()-playerDamage;
         setHealth(remainingHealth);
+        Menu.displayMessage(getName() + " subit " + playerDamage + " dégats.");
         if (remainingHealth > 0) {
-            Menu.displayMessage(getName() + " subit " + playerDamage + " dégats ce qui lui laisse encore " + getHealth()+" HP!");
+            Menu.displayMessage("Ce qui lui laisse encore " + getHealth()+" HP!");
         } else {
             Menu.displayMessage(getName()+" est moooooort! Il brûle tel un petit champignon passé à travers la grille du barbeuc' AHAHAHA");
         }

@@ -12,6 +12,7 @@ import environment.equipments.offensiveequipment.spell.Fireball;
 import environment.equipments.offensiveequipment.spell.Thunder;
 import environment.equipments.offensiveequipment.weapon.Club;
 import environment.equipments.offensiveequipment.weapon.Sword;
+import gamescript.Game;
 
 public class DefensiveEquipmentCell extends Cell{
     private DefensiveEquipment defensiveEquipmentContent;
@@ -37,7 +38,7 @@ public class DefensiveEquipmentCell extends Cell{
     }
 
     @Override
-    public void interact(Character character){
+    public void interact(Character character, Game game){
         if(this.defensiveEquipmentContent instanceof Potion){
             int heal = ((Potion) this.defensiveEquipmentContent).getHealLvl();
 

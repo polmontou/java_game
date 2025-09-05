@@ -5,7 +5,7 @@ import environment.equipments.offensiveequipment.OffensiveEquipment;
 abstract public class Weapon extends OffensiveEquipment {
 
     public Weapon(String name, String type, int attackLvl) {
-        super(name, "Weapon", attackLvl);
+        super(name, type, attackLvl);
     }
 
     static public Weapon swordOrClub() {

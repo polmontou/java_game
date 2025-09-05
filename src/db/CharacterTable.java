@@ -2,19 +2,13 @@ package db;
 
 
 import java.util.regex.*;
+import character.*;
 import character.Character;
-import character.Warrior;
-import character.Wizard;
 import com.google.gson.Gson;
 import environment.equipments.defensiveequipment.Shield;
 import environment.equipments.offensiveequipment.OffensiveEquipment;
-import environment.equipments.offensiveequipment.spell.Fireball;
-import environment.equipments.offensiveequipment.spell.Thunder;
-import environment.equipments.offensiveequipment.weapon.Club;
-import environment.equipments.offensiveequipment.weapon.Sword;
-import environment.equipments.offensiveequipment.weapon.Weapon;
-
-
+import environment.equipments.offensiveequipment.spell.*;
+import environment.equipments.offensiveequipment.weapon.*;
 import java.sql.*;
 import java.util.ArrayList;
 

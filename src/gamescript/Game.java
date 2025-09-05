@@ -2,6 +2,7 @@ package gamescript;
 
 import character.Character;
 import exceptions.CharacterOutOfBoardException;
+import exceptions.DeadCharacter;
 import gamescript.Menu;
 import gamesupport.Board;
 import gamesupport.Dice;
@@ -49,20 +50,25 @@ public class Game {
                     Menu.displayMessage("Tu es donc en case " + playerPosition);
                     String currentCellContent = board.getCellsContent(playerPosition);
                     Menu.displayMessage(currentCellContent);
-                    board.interactWithCell(playerPosition, character);
+                    board.interactWithCell(playerPosition, character, this);
                     menu.updateCharacter(character);
                 }
 
             } catch (CharacterOutOfBoardException e) {
-               e.getMessage();
-               playerPosition = 0;
-               Menu.displayMessage("Retour case 0! EHEHEHE");
+                Menu.displayMessage(e.getMessage());
+                playerPosition = 0;
+                Menu.displayMessage("Retour case 0! EHEHEHE");
 
+            } catch (DeadCharacter deadCharacter) {
+                Menu.displayMessage(deadCharacter.getMessage());
             }
 
         }
-            playerPosition = 0;
+        if(playerPosition == 64){
             Menu.displayMessage("Félicitations, tu es assez grillé pour être mangé!!");
+        }
+        playerPosition = 0;
+
     }
 
     private boolean parseCharacterPosition(int characterPosition) throws CharacterOutOfBoardException {
@@ -89,5 +95,11 @@ public class Game {
                 return -1;
         }
         return 0;
+    }
+    public void setPlayerPosition(int playerPosition) {
+        this.playerPosition = playerPosition;
+    }
+    public int getPlayerPosition() {
+        return playerPosition;
     }
 }

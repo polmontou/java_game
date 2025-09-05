@@ -5,8 +5,10 @@ import environment.enemies.Dragon;
 import environment.enemies.Enemy;
 import environment.enemies.Goblin;
 import environment.enemies.Sorcerer;
+import exceptions.DeadCharacter;
 import gamescript.Fight;
-import gamescript.Menu;
+import gamescript.Game;
+
 
 public class EnemyCell extends Cell {
     private Enemy enemy;
@@ -29,9 +31,8 @@ public class EnemyCell extends Cell {
     }
 
     @Override
-    public void interact(Character character){
-        Menu.displayMessage("COUcOU");
-        //Fight fight = new Fight(character, this.enemy);
+    public void interact(Character character, Game game) throws DeadCharacter {
+        Fight fight = new Fight(character, this.enemy, game);
     }
 
     @Override
